@@ -27,4 +27,4 @@ app.get('/', (req, res, next) => routeHome(req, res, next))
 app.get('/about', (req, res, next) => routeAbout(req, res, next))
 
 // Start the server
-app.listen(process.env.PORT || 3000, () => console.log(`Express server listening on port ${process.env.PORT || 3000}!`))
+app.listen(process.env.PORT || 5000, () => console.log(`Express server listening on port ${process.env.PORT || 3000}!`))
