@@ -1,32 +1,30 @@
-// Node Dependencies
-var express = require('express');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
+const express = require('express')
+const exphbs = require('express-handlebars')
+const path = require('path')
+const helpers = require('./helpers')
 
-// Open Server
-var PORT = process.env.PORT || 3000;
+// require routes
+const routeHome = require('./routes/home')
+const routeAbout = require('./routes/about')
 
+const app = express()
 
-var app = express();
-//Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static(__dirname + '/public'));
-// app.use(express.static('public'));
+// use express-handlebars view engine and set views template directory
+const hbs = exphbs.create({
+  partialsDir: __dirname + '/views/partials',
+  helpers: helpers()
+})
 
-// Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// Handlebars
-var exphbs = require('express-handlebars');
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/views');
 
+// serve static files form /public
+app.use(express.static(path.resolve(__dirname, 'public'))) // serve static files
 
-var router = require('./controllers/burgers_controller.js');
-app.use('/', router);
+// Set your routes here
+app.get('/', (req, res, next) => routeHome(req, res, next))
+app.get('/about', (req, res, next) => routeAbout(req, res, next))
 
-
-
-app.listen(PORT, function() 
-{
-  console.log("App listening on PORT " + PORT);
-});
+// Start the server
+app.listen(process.env.PORT || 3000, () => console.log(`Express server listening on port ${process.env.PORT || 3000}!`))
