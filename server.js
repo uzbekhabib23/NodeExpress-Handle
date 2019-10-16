@@ -17,15 +17,15 @@ app.set("view engine", "handlebars");
 
 // Routes
 app.get("/weekday", function(req, res) {
-  res.render("index", lunches[0]);
+  res.render("index", burgers[0]);
 });
 
 app.get("/weekend", function(req, res) {
-  res.render("index", lunches[1]);
+  res.render("index", burgers[1]);
 });
 
 app.get("/lunches", function(req, res) {
-  res.render("all-lunches", {
+  res.render("all-burgers", {
     foods: burgers,
   });
 });
