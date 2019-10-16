@@ -6,10 +6,6 @@ var methodOverride = require('method-override');
 // Open Server
 var PORT = process.env.PORT || 3000;
 
-$ heroku addons:create mongolab:sandbox
-var mongoose = require ('mongoose');
-mongoose.connect(process.env.MONGODB_URI || 
-  'mongodb://localhost/burger-02');
 
 var app = express();
 //Serve static content for the app from the "public" directory in the application directory.
