@@ -2,7 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const path = require('path')
 const helpers = require('./helpers')
-
+console.log(err);
 // require routes
 const routeHome = require('./routes/home')
 const routeAbout = require('./routes/about')
