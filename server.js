@@ -1,30 +1,23 @@
-const express = require('express')
-const exphbs = require('express-handlebars')
-const path = require('path')
-const helpers = require('./helpers')
-console.log(err);
-// require routes
-const routeHome = require('./routes/home')
-const routeAbout = require('./routes/about')
+var express = require("express");
 
-const app = express()
+// Sets up the Express App
+// =============================================================
+var app = express();
+var PORT = process.env.PORT || 5000;
 
-// use express-handlebars view engine and set views template directory
-const hbs = exphbs.create({
-  partialsDir: __dirname + '/views/partials',
-  helpers: helpers()
-})
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.set('views', __dirname + '/views');
+// Static directory to be served
+app.use(express.static("app/public"));
 
-// serve static files form /public
-app.use(express.static(path.resolve(__dirname, 'public'))) // serve static files
+// Routes
+// =============================================================
+require("./app/routes/api-routes.js")(app);
 
-// Set your routes here
-app.get('/', (req, res, next) => routeHome(req, res, next))
-app.get('/about', (req, res, next) => routeAbout(req, res, next))
-
-// Start the server
-app.listen(process.env.PORT || 5000, () => console.log(`Express server listening on port ${process.env.PORT || 3000}!`))
+// Starts the server to begin listening
+// =============================================================
+app.listen(PORT, function() {
+  console.log("App listening on PORT " + PORT);
+});
